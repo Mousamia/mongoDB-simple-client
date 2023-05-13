@@ -6,11 +6,11 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
-  const HandleUser = (event) =>{
+  const HandleUser = (event) => {
     event.preventDefault();
     const name = event.target.name.value;
     const email = event.target.email.value;
-    const user = { name, email};
+    const user = { name, email };
     console.log(user);
 
     fetch('http://localhost:5000/users', {
@@ -21,9 +21,18 @@ function App() {
       body: JSON.stringify(user)
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data)
+        if (data.insertedId) {
+          alert("user addded successfully");
+         
+        }
+      }
+      )
       .catch(error => {
         console.log(error);
+
+
       });
 
 
@@ -31,7 +40,7 @@ function App() {
 
   return (
     <>
-    
+
       <h1>Mongo DB connect</h1>
       <form onSubmit={HandleUser}>
         <input type="text" name='name' />
@@ -39,7 +48,7 @@ function App() {
         <input type="submit" value="Submit" />
 
       </form>
-      
+
     </>
   )
 }
